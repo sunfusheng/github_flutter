@@ -1,4 +1,4 @@
-package com.sunfusheng.github.github_flutter
+package com.sunfusheng.github.flutter
 
 import android.os.Bundle
 
