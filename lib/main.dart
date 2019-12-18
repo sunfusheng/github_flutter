@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:github_flutter/widget/EditTextWidget.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,6 +54,14 @@ class _LoginPageState extends State<LoginPage> {
                   validator: (text) {
                     return null;
                   },
+                ),
+                EditTextWidget(
+                  maxLines: 1,
+                  maxLength: 100,
+                  keyboardType: TextInputType.text,
+                  hintText: '请输入用户名或邮箱',
+                  hintStyle: TextStyle(color: Color(0xffcccccc)),
+                  textStyle: TextStyle(color: Color(0xff333333)),
                 ),
               ],
             ),
