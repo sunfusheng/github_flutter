@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:github_flutter/widget/EditTextWidget.dart';
+
+import 'pages/LoginPage.dart';
+import 'resource/ThemeRes.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,64 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GitHub LoginPage',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-      ),
+      theme: ThemeRes.mainTheme,
       home: LoginPage(),
-    );
-  }
-}
-
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Form(
-            key: null,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: '请输入用户名或邮箱',
-                    labelText: '账号: ',
-                  ),
-                  validator: (text) {
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: '请输入密码',
-                    labelText: '密码: ',
-                  ),
-                  validator: (text) {
-                    return null;
-                  },
-                ),
-                EditTextWidget(
-                  maxLines: 1,
-                  maxLength: 100,
-                  keyboardType: TextInputType.text,
-                  hintText: '请输入用户名或邮箱',
-                  hintStyle: TextStyle(color: Color(0xffcccccc)),
-                  textStyle: TextStyle(color: Color(0xff333333)),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
