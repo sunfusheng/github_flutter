@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github_flutter/resource/ColorRes.dart';
 import 'package:github_flutter/resource/StringRes.dart';
+import 'package:github_flutter/utils/ToastUtil.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,9 +9,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // 创建用户名组件
   Widget createUsernameWidget() {
     return TextFormField(
-      autofocus: true,
+      controller: usernameController,
+      focusNode: usernameFocusNode,
+      autofocus: false,
       decoration: InputDecoration(
         hintText: StringRes.inputUsernameHint,
         hintStyle: TextStyle(
@@ -18,6 +22,20 @@ class _LoginPageState extends State<LoginPage> {
           fontSize: 17,
         ),
         prefixIcon: Icon(Icons.person),
+        suffixIcon: showClearIcon
+            ? IconButton(
+                icon: Icon(
+                  Icons.clear,
+                  color: ColorRes.font4,
+                  size: 17,
+                ),
+                onPressed: () {
+                  usernameController.clear();
+                  showClearIcon = false;
+                  setState(() {});
+                },
+              )
+            : null,
         border: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: ColorRes.font4),
         ),
@@ -30,12 +48,20 @@ class _LoginPageState extends State<LoginPage> {
         fontSize: 17,
       ),
       cursorColor: ColorRes.colorPrimary,
+      onChanged: (it) {
+        showClearIcon = it.length > 0;
+        setState(() {});
+      },
     );
   }
 
+  // 创建密码组件
   Widget createPasswordWidget() {
     return TextFormField(
-      autofocus: true,
+      controller: passwordController,
+      focusNode: passwordFocusNode,
+      autofocus: false,
+      obscureText: !showPassword,
       decoration: InputDecoration(
         hintText: StringRes.inputPasswordHint,
         hintStyle: TextStyle(
@@ -43,6 +69,18 @@ class _LoginPageState extends State<LoginPage> {
           fontSize: 17,
         ),
         prefixIcon: Icon(Icons.lock),
+        suffixIcon: IconButton(
+          icon: Icon(
+            showPassword ? Icons.visibility : Icons.visibility_off,
+            color: ColorRes.font4,
+            size: 17,
+          ),
+          onPressed: () {
+            setState(() {
+              showPassword = !showPassword;
+            });
+          },
+        ),
         border: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: ColorRes.font4),
         ),
@@ -58,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // 创建登录组件
   Widget createLoginWidget() {
     return OutlineButton(
       child: SizedBox(
@@ -82,17 +121,55 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void login() {}
+  void unfocusAll() {
+    if (usernameFocusNode.hasFocus) {
+      usernameFocusNode.unfocus();
+    }
+    if (passwordFocusNode.hasFocus) {
+      passwordFocusNode.unfocus();
+    }
+  }
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  FocusNode usernameFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
+
+  bool showClearIcon = false;
+  bool showPassword = false;
+
+  void login() {
+    String username = usernameController.text;
+    String password = passwordController.text;
+    if (username.isEmpty) {
+      ToastUtil.show(StringRes.inputUsernameHint);
+      return;
+    }
+
+    print('username: $username');
+
+    if (password.isEmpty) {
+      ToastUtil.show(StringRes.inputPasswordHint);
+      return;
+    }
+
+    print('password: $password');
+
+    unfocusAll();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Form(
-            key: null,
+      body: GestureDetector(
+        onTap: () {
+          unfocusAll();
+        },
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -107,5 +184,12 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }

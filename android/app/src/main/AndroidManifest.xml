@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sunfusheng.github.github_flutter">
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
@@ -9,7 +10,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:icon="@mipmap/ic_launcher"
-        android:label="github_flutter">
+        android:label="Github-Flutter"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="com.sunfusheng.github.flutter.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
