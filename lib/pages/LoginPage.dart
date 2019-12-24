@@ -164,6 +164,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: () {
           unfocusAll();
         },
