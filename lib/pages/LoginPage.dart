@@ -167,20 +167,38 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () {
           unfocusAll();
         },
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                createUsernameWidget(),
-                SizedBox(height: 10),
-                createPasswordWidget(),
-                SizedBox(height: 60),
-                createLoginWidget(),
-              ],
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: FractionalOffset.center,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    createUsernameWidget(),
+                    SizedBox(height: 10),
+                    createPasswordWidget(),
+                    SizedBox(height: 60),
+                    createLoginWidget(),
+                  ],
+                ),
+              ),
             ),
-          ),
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: Text(
+                  StringRes.appAuthor,
+                  style: TextStyle(
+                    color: ColorRes.font3,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
