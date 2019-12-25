@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:github_flutter/resource/ColorRes.dart';
-import 'package:github_flutter/resource/StringRes.dart';
+import 'package:github_flutter/res/ColorsR.dart';
+import 'package:github_flutter/res/StringsR.dart';
 import 'package:github_flutter/utils/ToastUtil.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,9 +16,9 @@ class _LoginPageState extends State<LoginPage> {
       focusNode: usernameFocusNode,
       autofocus: false,
       decoration: InputDecoration(
-        hintText: StringRes.inputUsernameHint,
+        hintText: StringsR.inputUsernameHint,
         hintStyle: TextStyle(
-          color: ColorRes.font4,
+          color: ColorsR.font4,
           fontSize: 17,
         ),
         prefixIcon: Icon(Icons.person),
@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
             ? IconButton(
                 icon: Icon(
                   Icons.clear,
-                  color: ColorRes.font4,
+                  color: ColorsR.font4,
                   size: 17,
                 ),
                 onPressed: () {
@@ -37,17 +37,17 @@ class _LoginPageState extends State<LoginPage> {
               )
             : null,
         border: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorRes.font4),
+          borderSide: BorderSide(width: 1, color: ColorsR.font4),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorRes.colorPrimary),
+          borderSide: BorderSide(width: 1, color: ColorsR.colorPrimary),
         ),
       ),
       style: TextStyle(
-        color: ColorRes.font1,
+        color: ColorsR.font1,
         fontSize: 17,
       ),
-      cursorColor: ColorRes.colorPrimary,
+      cursorColor: ColorsR.colorPrimary,
       onChanged: (it) {
         showClearIcon = it.length > 0;
         setState(() {});
@@ -63,16 +63,16 @@ class _LoginPageState extends State<LoginPage> {
       autofocus: false,
       obscureText: !showPassword,
       decoration: InputDecoration(
-        hintText: StringRes.inputPasswordHint,
+        hintText: StringsR.inputPasswordHint,
         hintStyle: TextStyle(
-          color: ColorRes.font4,
+          color: ColorsR.font4,
           fontSize: 17,
         ),
         prefixIcon: Icon(Icons.lock),
         suffixIcon: IconButton(
           icon: Icon(
             showPassword ? Icons.visibility : Icons.visibility_off,
-            color: ColorRes.font4,
+            color: ColorsR.font4,
             size: 17,
           ),
           onPressed: () {
@@ -82,17 +82,17 @@ class _LoginPageState extends State<LoginPage> {
           },
         ),
         border: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorRes.font4),
+          borderSide: BorderSide(width: 1, color: ColorsR.font4),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorRes.colorPrimary),
+          borderSide: BorderSide(width: 1, color: ColorsR.colorPrimary),
         ),
       ),
       style: TextStyle(
-        color: ColorRes.font1,
+        color: ColorsR.font1,
         fontSize: 17,
       ),
-      cursorColor: ColorRes.colorPrimary,
+      cursorColor: ColorsR.colorPrimary,
     );
   }
 
@@ -103,20 +103,20 @@ class _LoginPageState extends State<LoginPage> {
         height: 48,
         child: Center(
           child: Text(
-            StringRes.login,
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
+            StringsR.login,
+            style: TextStyle(color: ColorsR.colorPrimary, fontSize: 18),
           ),
         ),
       ),
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: ColorRes.colorPrimary, width: 1),
+        side: BorderSide(color: ColorsR.colorPrimary, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(24)),
       ),
       color: Colors.white,
-      highlightColor: ColorRes.colorPrimary_30,
+      highlightColor: ColorsR.colorPrimary_30,
       splashColor: Colors.white,
-      highlightedBorderColor: ColorRes.colorPrimary,
-      borderSide: BorderSide(color: ColorRes.colorPrimary),
+      highlightedBorderColor: ColorsR.colorPrimary,
+      borderSide: BorderSide(color: ColorsR.colorPrimary),
       onPressed: login,
     );
   }
@@ -144,12 +144,12 @@ class _LoginPageState extends State<LoginPage> {
     String password = passwordController.text;
 
     if (username.isEmpty) {
-      ToastUtil.show(StringRes.inputUsernameHint);
+      ToastUtil.show(StringsR.inputUsernameHint);
       return;
     }
 
     if (password.isEmpty) {
-      ToastUtil.show(StringRes.inputPasswordHint);
+      ToastUtil.show(StringsR.inputPasswordHint);
       return;
     }
 
@@ -188,8 +188,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Padding(
                 padding: EdgeInsets.only(bottom: 16),
                 child: Text(
-                  StringRes.appAuthor,
-                  style: TextStyle(color: ColorRes.font3, fontSize: 12),
+                  StringsR.appAuthor,
+                  style: TextStyle(color: ColorsR.font3, fontSize: 12),
                 ),
               ),
             ),

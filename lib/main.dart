@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'pages/LoginPage.dart';
-import 'resource/ThemeRes.dart';
+import 'res/ThemesR.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GitHub LoginPage',
-      theme: ThemeRes.mainTheme,
+      theme: ThemesR.mainTheme,
       home: LoginPage(),
     );
   }
