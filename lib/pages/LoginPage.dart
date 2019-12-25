@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void unfocusAll() {
+  void hideSoftKeyboard() {
     if (usernameFocusNode.hasFocus) {
       usernameFocusNode.unfocus();
     }
@@ -142,21 +142,18 @@ class _LoginPageState extends State<LoginPage> {
   void login() {
     String username = usernameController.text;
     String password = passwordController.text;
+
     if (username.isEmpty) {
       ToastUtil.show(StringRes.inputUsernameHint);
       return;
     }
-
-    print('username: $username');
 
     if (password.isEmpty) {
       ToastUtil.show(StringRes.inputPasswordHint);
       return;
     }
 
-    print('password: $password');
-
-    unfocusAll();
+    hideSoftKeyboard();
   }
 
   @override
@@ -166,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          unfocusAll();
+          hideSoftKeyboard();
         },
         child: Stack(
           children: <Widget>[
@@ -192,10 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.only(bottom: 16),
                 child: Text(
                   StringRes.appAuthor,
-                  style: TextStyle(
-                    color: ColorRes.font3,
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: ColorRes.font3, fontSize: 12),
                 ),
               ),
             ),

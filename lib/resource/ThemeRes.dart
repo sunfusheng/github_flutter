@@ -7,6 +7,7 @@ class ThemeRes {
     primaryColor: ColorRes.colorPrimary,
     primaryColorDark: ColorRes.colorPrimary,
     accentColor: ColorRes.colorPrimary,
+    primaryColorBrightness: Brightness.light,
     focusColor: ColorRes.colorPrimary,
     backgroundColor: Colors.white,
   );
