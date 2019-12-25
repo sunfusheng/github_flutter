@@ -46,7 +46,7 @@ class NetUtil {
             'sfs [onResponse] statusCode: ${response.statusCode} data: ${response.data}');
       },
       onError: (DioError e) {
-        print('sfs [onError] type: ${e.type} message: ${e.message}');
+        print('sfs [onError] ${e.toString()}');
       },
     ));
 

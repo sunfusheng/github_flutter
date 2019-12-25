@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:github_flutter/net/Api.dart';
 import 'package:github_flutter/res/ColorsR.dart';
 import 'package:github_flutter/res/StringsR.dart';
 import 'package:github_flutter/utils/ToastUtil.dart';
@@ -140,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
   bool showPassword = false;
 
   void login() {
+     Api.createAuth();
     String username = usernameController.text;
     String password = passwordController.text;
 

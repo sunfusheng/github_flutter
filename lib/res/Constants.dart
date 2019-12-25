@@ -7,10 +7,16 @@ class Constants {
   static const String USER_AGENT = 'sunfusheng';
   static const String ACCEPT_JSON = 'application/vnd.github.v3+json';
 
-//   static const String[] SCOPES = {"user", "repo", "notifications", "gist", "admin:org"};
-  static const String NOTE = "GitHubFlutter";
+  static const String NOTE = "FlutterGitHub";
   static const String NOTE_URL = StringsR.githubUrl;
-  static const String CLIENT_ID = "0af4dd82697eaea821d5";
+  static const String CLIENT_ID = "f52c9822aafe7fc8175f";
   static const String CLIENT_SECRET =
-      "2d7abc27a2812e3927257a7ae3274475a0505907";
+      "ac752771e11606b1d7685d4188ebca5fad32b15b";
+  static const Set<String> SCOPES = {
+    "user",
+    "repo",
+    "notifications",
+    "gist",
+    "admin:org"
+  };
 }
