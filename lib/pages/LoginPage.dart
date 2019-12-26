@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:github_flutter/entity/EntityFactory.dart';
+import 'package:github_flutter/entity/auth_entity.dart';
 import 'package:github_flutter/net/Api.dart';
+import 'package:github_flutter/net/ResponseData.dart';
 import 'package:github_flutter/res/ColorsR.dart';
+import 'package:github_flutter/res/Constants.dart';
 import 'package:github_flutter/res/StringsR.dart';
+import 'package:github_flutter/utils/EncryptionUtil.dart';
+import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
 import 'package:github_flutter/utils/ToastUtil.dart';
 
 class LoginPage extends StatefulWidget {
@@ -140,8 +146,7 @@ class _LoginPageState extends State<LoginPage> {
   bool showClearIcon = false;
   bool showPassword = false;
 
-  void login() {
-     Api.createAuth();
+  void login() async {
     String username = usernameController.text;
     String password = passwordController.text;
 
@@ -156,6 +161,13 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     hideSoftKeyboard();
+    SharedPreferencesUtil.setString(PrefsKey.USERNAME, username);
+
+    var auth = EncryptionUtil.encodeBase64('$username:$password');
+    SharedPreferencesUtil.setString(PrefsKey.AUTH, auth).then((it) async {
+      var result = await LoginApi.fetchToken();
+      print('login() ${result.toString()}');
+    });
   }
 
   @override

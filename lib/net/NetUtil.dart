@@ -8,72 +8,66 @@ import 'package:github_flutter/res/Constants.dart';
 import 'ResponseData.dart';
 
 class NetUtil {
-  static const int TIMEOUT = 60 * 1000; // 60s
-
-  static Future<ResponseData> get(url, param) async {
-    return await request(url, param, Options(method: "GET"));
+  // GET请求
+  static Future<ResponseData> get(path, {params, headers}) async {
+    return await _request(path, params, headers, Options(method: "GET"));
   }
 
-  static Future<ResponseData> post(url, param) async {
-    return await request(url, param, Options(method: 'POST'));
+  // POST请求
+  static Future<ResponseData> post(path, {params, headers}) async {
+    return await _request(path, params, headers, Options(method: 'POST'));
   }
 
-  // 请求网络
-  static Future<ResponseData> request(
-      String url, params, Options options) async {
+  // 网络请求
+  static Future<ResponseData> _request(path, params, headers, options) async {
     bool connected = await isConnected();
     if (!connected) {
       return ExceptionUtil.responseData(ExceptionUtil.NETWORK_ERROR);
     }
 
-    if (options == null) {
-      options = Options(method: 'GET');
+    if (headers != null) {
+      options.headers = headers;
     }
-    Map<String, String> headers = HashMap<String, String>();
-    headers['Accept'] = Constants.ACCEPT_JSON;
-    options.headers = headers;
-    options.sendTimeout = TIMEOUT;
-    options.receiveTimeout = TIMEOUT;
-
-    Dio dio = Dio();
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (RequestOptions options) {
-        print(
-            'sfs [onRequest] url: ${options.uri.toString()} data: ${options.data}');
-      },
-      onResponse: (Response response) {
-        print(
-            'sfs [onResponse] statusCode: ${response.statusCode} data: ${response.data}');
-      },
-      onError: (DioError e) {
-        print('sfs [onError] ${e.toString()}');
-      },
-    ));
 
     Response response;
     try {
-      response = await dio.request(url, data: params, options: options);
+      response = await _getDio().request(path, data: params, options: options);
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        return ExceptionUtil.responseData(ExceptionUtil.CONNECT_TIMEOUT);
-      } else if (e.type == DioErrorType.SEND_TIMEOUT) {
-        return ExceptionUtil.responseData(ExceptionUtil.SEND_TIMEOUT);
-      } else if (e.type == DioErrorType.RECEIVE_TIMEOUT) {
-        return ExceptionUtil.responseData(ExceptionUtil.RECEIVE_TIMEOUT);
-      } else {
-        if (e != null && e.response != null) {
-          return ExceptionUtil.responseData(e.response.statusCode);
-        }
-        return ExceptionUtil.responseData(ExceptionUtil.UNKNOWN);
-      }
+      return ExceptionUtil.handleDioError(e);
     }
 
-    if (response == null) {
-      return ExceptionUtil.responseData(ExceptionUtil.NETWORK_ERROR);
+    if (response?.statusCode == 200 || response?.statusCode == 201) {
+      return ResponseData(code: 0, msg: 'OK', json: response.data);
     }
+    return ExceptionUtil.responseData(response?.statusCode);
+  }
 
-    return ResponseData(
-        code: response.statusCode, msg: '', data: response.data);
+  static Dio _dio;
+
+  static _getDio() {
+    if (_dio == null) {
+      _dio = Dio(BaseOptions(
+        baseUrl: Constants.BASE_URL_API_GITHUB,
+        connectTimeout: 30000,
+        sendTimeout: 30000,
+        receiveTimeout: 30000,
+      ));
+      _dio.interceptors.add(
+        InterceptorsWrapper(onRequest: (RequestOptions options) {
+          print(
+              'sfs 【onRequest】 url: ${options?.uri?.toString()} \nmethod: ${options?.method} \ndata: ${options?.data} \nheaders:${options?.headers}');
+          return options;
+        }, onResponse: (Response response) {
+          print(
+              'sfs 【onResponse】 statusCode: ${response?.statusCode} \ndata: ${response?.data?.toString()}');
+          return response;
+        }, onError: (DioError err) {
+          print('sfs 【onError】 ${err?.toString()}');
+          return err;
+        }),
+      );
+    }
+    return _dio;
   }
 
   // 判断网络是否连接

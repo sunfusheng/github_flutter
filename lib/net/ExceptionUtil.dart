@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:github_flutter/net/ResponseData.dart';
 
 class ExceptionUtil {
@@ -72,6 +73,17 @@ class ExceptionUtil {
       code: errorCode,
       msg: exceptionInfo(errorCode).errorMsg,
     );
+  }
+
+  static ResponseData handleDioError(DioError e) {
+    if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+      return responseData(ExceptionUtil.CONNECT_TIMEOUT);
+    } else if (e.type == DioErrorType.SEND_TIMEOUT) {
+      return responseData(ExceptionUtil.SEND_TIMEOUT);
+    } else if (e.type == DioErrorType.RECEIVE_TIMEOUT) {
+      return responseData(ExceptionUtil.RECEIVE_TIMEOUT);
+    }
+    return responseData(e.response?.statusCode);
   }
 }
 
