@@ -62,7 +62,7 @@ class AuthEntity {
 
   @override
   String toString() {
-    return 'AuthEntity{tokenLastEight: $tokenLastEight, token: $token}';
+    return 'AuthEntity{token: $token}';
   }
 }
 

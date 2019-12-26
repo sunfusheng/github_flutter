@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:github_flutter/entity/EntityFactory.dart';
 import 'package:github_flutter/entity/auth_entity.dart';
 import 'package:github_flutter/net/Api.dart';
 import 'package:github_flutter/net/ResponseData.dart';
@@ -161,12 +160,17 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     hideSoftKeyboard();
-    SharedPreferencesUtil.setString(PrefsKey.USERNAME, username);
 
     var auth = EncryptionUtil.encodeBase64('$username:$password');
     SharedPreferencesUtil.setString(PrefsKey.AUTH, auth).then((it) async {
-      var result = await LoginApi.fetchToken();
-      print('login() ${result.toString()}');
+      var user = await LoginApi.fetchUser();
+      print('0.login() ${user.toString()}');
+      ResponseData<AuthEntity> result = await LoginApi.fetchToken();
+      AuthEntity authEntity = result.data;
+      print('1.login() ${authEntity.toString()}');
+      SharedPreferencesUtil.setString(PrefsKey.TOKEN, authEntity.token);
+    }).then((it) async {
+      print('2.login() ${it.toString()}');
     });
   }
 

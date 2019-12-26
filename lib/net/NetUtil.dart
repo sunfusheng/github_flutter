@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:github_flutter/net/ExceptionUtil.dart';
@@ -9,17 +7,15 @@ import 'ResponseData.dart';
 
 class NetUtil {
   // GET请求
-  static Future<ResponseData> get(path, {params, headers}) async {
-    return await _request(path, params, headers, Options(method: "GET"));
-  }
+  static get(path, {params, headers}) async =>
+      await _request(path, params, headers, Options(method: "GET"));
 
   // POST请求
-  static Future<ResponseData> post(path, {params, headers}) async {
-    return await _request(path, params, headers, Options(method: 'POST'));
-  }
+  static post(path, {params, headers}) async =>
+      await _request(path, params, headers, Options(method: 'POST'));
 
   // 网络请求
-  static Future<ResponseData> _request(path, params, headers, options) async {
+  static _request(path, params, headers, options) async {
     bool connected = await isConnected();
     if (!connected) {
       return ExceptionUtil.responseData(ExceptionUtil.NETWORK_ERROR);
@@ -47,7 +43,7 @@ class NetUtil {
   static _getDio() {
     if (_dio == null) {
       _dio = Dio(BaseOptions(
-        baseUrl: Constants.BASE_URL_API_GITHUB,
+        baseUrl: Constants.BASE_URL,
         connectTimeout: 30000,
         sendTimeout: 30000,
         receiveTimeout: 30000,
@@ -55,7 +51,7 @@ class NetUtil {
       _dio.interceptors.add(
         InterceptorsWrapper(onRequest: (RequestOptions options) {
           print(
-              'sfs 【onRequest】 url: ${options?.uri?.toString()} \nmethod: ${options?.method} \ndata: ${options?.data} \nheaders:${options?.headers}');
+              'sfs 【onRequest】 url: ${options?.uri?.toString()} method: ${options?.method} \ndata: ${options?.data} \nheaders:${options?.headers}');
           return options;
         }, onResponse: (Response response) {
           print(
