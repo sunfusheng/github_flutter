@@ -6,38 +6,6 @@ import 'package:github_flutter/res/Constants.dart';
 import 'ResponseData.dart';
 
 class NetUtil {
-  // GET请求
-  static get(path, {params, headers}) async =>
-      await _request(path, params, headers, Options(method: "GET"));
-
-  // POST请求
-  static post(path, {params, headers}) async =>
-      await _request(path, params, headers, Options(method: 'POST'));
-
-  // 网络请求
-  static _request(path, params, headers, options) async {
-    bool connected = await isConnected();
-    if (!connected) {
-      return ExceptionUtil.responseData(ExceptionUtil.NETWORK_ERROR);
-    }
-
-    if (headers != null) {
-      options.headers = headers;
-    }
-
-    Response response;
-    try {
-      response = await _getDio().request(path, data: params, options: options);
-    } on DioError catch (e) {
-      return ExceptionUtil.handleDioError(e);
-    }
-
-    if (response?.statusCode == 200 || response?.statusCode == 201) {
-      return ResponseData(code: 0, msg: 'OK', json: response.data);
-    }
-    return ExceptionUtil.responseData(response?.statusCode);
-  }
-
   static Dio _dio;
 
   static _getDio() {
@@ -48,22 +16,53 @@ class NetUtil {
         sendTimeout: 30000,
         receiveTimeout: 30000,
       ));
-      _dio.interceptors.add(
-        InterceptorsWrapper(onRequest: (RequestOptions options) {
-          print(
-              'sfs 【onRequest】 url: ${options?.uri?.toString()} method: ${options?.method} \ndata: ${options?.data} \nheaders:${options?.headers}');
-          return options;
-        }, onResponse: (Response response) {
-          print(
-              'sfs 【onResponse】 statusCode: ${response?.statusCode} \ndata: ${response?.data?.toString()}');
-          return response;
-        }, onError: (DioError err) {
-          print('sfs 【onError】 ${err?.toString()}');
-          return err;
-        }),
-      );
+      _dio.interceptors.add(LogInterceptor(
+        request: false,
+        requestHeader: true,
+        responseHeader: false,
+        responseBody: true,
+      ));
     }
     return _dio;
+  }
+
+  // GET请求
+  static get(path, {params, headers}) async =>
+      await _request(path, params, headers, Options(method: "GET"));
+
+  // POST请求
+  static post(path, {params, headers}) async =>
+      await _request(path, params, headers, Options(method: 'POST'));
+
+  // 网络请求
+  static _request(path, params, headers, Options options) async {
+    bool connected = await isConnected();
+    if (!connected) {
+      return ExceptionUtil.responseData(ExceptionUtil.NETWORK_ERROR);
+    }
+
+    if (headers != null) {
+      options.headers = headers;
+    }
+
+    Dio dio = _getDio();
+    Response response;
+    try {
+      if (options.method == 'GET') {
+        response =
+            await dio.get(path, queryParameters: params, options: options);
+      } else {
+        response = await dio.request(path, data: params, options: options);
+      }
+    } on DioError catch (e) {
+      return ExceptionUtil.handleDioError(e);
+    }
+
+    if (response?.statusCode == 200 || response?.statusCode == 201) {
+      return ResponseData(code: 0, msg: 'OK', json: response.data);
+    } else {
+      return ExceptionUtil.responseData(response?.statusCode);
+    }
   }
 
   // 判断网络是否连接

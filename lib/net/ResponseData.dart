@@ -1,23 +1,23 @@
-import 'package:github_flutter/entity/EntityFactory.dart';
+import 'package:github_flutter/entity/json_parser.dart';
 
 class ResponseData<T> {
   int code;
   String msg;
-  var json;
-  var data;
+  T data;
+  Map<String, dynamic> json;
 
-  ResponseData({this.code, this.msg, this.json});
+  ResponseData({this.code, this.msg, this.data, this.json});
 
   ResponseData<T> parseJson<T>() {
     ResponseData<T> obj = ResponseData<T>(code: code, msg: msg, json: json);
-    if (json != null) {
-      obj.data = EntityFactory.generateObj<T>(json);
+    if (json != null && json.isNotEmpty) {
+      obj.data = JsonParser.parse<T>(json);
     }
     return obj;
   }
 
   @override
   String toString() {
-    return 'ResponseData{code: $code, msg: $msg, data: $data}';
+    return 'ResponseData{\ncode: $code, \nmsg: $msg, \njson: $json, \ndata: $data\n}';
   }
 }

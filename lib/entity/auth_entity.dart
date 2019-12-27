@@ -1,4 +1,4 @@
-class AuthEntity {
+class Auth {
   AuthApp app;
   String hashedToken;
   String note;
@@ -12,7 +12,7 @@ class AuthEntity {
   String url;
   String token;
 
-  AuthEntity(
+  Auth(
       {this.app,
       this.hashedToken,
       this.note,
@@ -26,7 +26,7 @@ class AuthEntity {
       this.url,
       this.token});
 
-  AuthEntity.fromJson(Map<String, dynamic> json) {
+  Auth.fromJson(Map<String, dynamic> json) {
     app = json['app'] != null ? new AuthApp.fromJson(json['app']) : null;
     hashedToken = json['hashed_token'];
     note = json['note'];
@@ -62,7 +62,7 @@ class AuthEntity {
 
   @override
   String toString() {
-    return 'AuthEntity{token: $token}';
+    return 'Auth{token: $token}';
   }
 }
 

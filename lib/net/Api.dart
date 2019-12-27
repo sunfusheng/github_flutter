@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:github_flutter/entity/auth_entity.dart';
+import 'package:github_flutter/entity/user_entity.dart';
 import 'package:github_flutter/net/NetUtil.dart';
 import 'package:github_flutter/res/Constants.dart';
 import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
@@ -26,11 +27,12 @@ class LoginApi {
           'scopes': Constants.SCOPES,
         },
         headers: await _getHeaders());
-    return response.parseJson<AuthEntity>();
+    return response.parseJson<Auth>();
   }
 
   static fetchUser() async {
-    return NetUtil.get('/user', headers: await _getHeaders());
+    var response = await NetUtil.get('/user', headers: await _getHeaders());
+    return response.parseJson<User>();
   }
 }
 

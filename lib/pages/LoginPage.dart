@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:github_flutter/entity/auth_entity.dart';
+import 'package:github_flutter/entity/user_entity.dart';
 import 'package:github_flutter/net/Api.dart';
 import 'package:github_flutter/net/ResponseData.dart';
 import 'package:github_flutter/res/ColorsR.dart';
@@ -8,6 +9,8 @@ import 'package:github_flutter/res/StringsR.dart';
 import 'package:github_flutter/utils/EncryptionUtil.dart';
 import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
 import 'package:github_flutter/utils/ToastUtil.dart';
+import 'package:github_flutter/widgets/LoadingDialog.dart';
+import 'package:rxdart/rxdart.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -55,8 +58,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
       cursorColor: ColorsR.colorPrimary,
       onChanged: (it) {
-        showClearIcon = it.length > 0;
-        setState(() {});
+        setState(() {
+          showClearIcon = it.length > 0;
+        });
       },
     );
   }
@@ -127,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // 隐藏软键盘
   void hideSoftKeyboard() {
     if (usernameFocusNode.hasFocus) {
       usernameFocusNode.unfocus();
@@ -136,15 +141,17 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController usernameController =
+      TextEditingController(text: 'sunfusheng');
   TextEditingController passwordController = TextEditingController();
 
   FocusNode usernameFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
 
-  bool showClearIcon = false;
+  bool showClearIcon = true;
   bool showPassword = false;
 
+  // 登录
   void login() async {
     String username = usernameController.text;
     String password = passwordController.text;
@@ -159,18 +166,29 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
+    LoadingDialogUtil.show(context, text: StringsR.logging);
     hideSoftKeyboard();
 
     var auth = EncryptionUtil.encodeBase64('$username:$password');
-    SharedPreferencesUtil.setString(PrefsKey.AUTH, auth).then((it) async {
-      var user = await LoginApi.fetchUser();
-      print('0.login() ${user.toString()}');
-      ResponseData<AuthEntity> result = await LoginApi.fetchToken();
-      AuthEntity authEntity = result.data;
-      print('1.login() ${authEntity.toString()}');
-      SharedPreferencesUtil.setString(PrefsKey.TOKEN, authEntity.token);
-    }).then((it) async {
-      print('2.login() ${it.toString()}');
+    SharedPreferencesUtil.setString(PrefsKey.AUTH, auth).then((it) {
+      ZipStream.zip2(Stream.fromFuture(LoginApi.fetchToken()),
+          Stream.fromFuture(LoginApi.fetchUser()), (auth, user) {
+        ResponseData<Auth> authResponse = auth;
+        ResponseData<User> userResponse = user;
+
+        if (authResponse.code == 0 && userResponse.code == 0) {
+          SharedPreferencesUtil.setString(
+              PrefsKey.TOKEN, authResponse.data.token);
+          SharedPreferencesUtil.setString(
+              PrefsKey.USERNAME, userResponse.data.login);
+          return true;
+        }
+        ToastUtil.show(authResponse.msg);
+        return false;
+      }).listen((it) {
+        LoadingDialogUtil.hide(context);
+        if (it) {}
+      });
     });
   }
 

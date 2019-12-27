@@ -1,5 +1,3 @@
-import 'StringsR.dart';
-
 class Constants {
   static const String BASE_URL = 'https://api.github.com';
   static const String GITHUB_URL = 'https://github.com';
@@ -8,7 +6,7 @@ class Constants {
   static const String ACCEPT_JSON = 'application/vnd.github.v3+json';
 
   static const String NOTE = "FlutterGitHub";
-  static const String NOTE_URL = StringsR.githubUrl;
+  static const String NOTE_URL = 'https://github.com/sunfusheng/github_flutter';
   static const String CLIENT_ID = "f52c9822aafe7fc8175f";
   static const String CLIENT_SECRET =
       "ac752771e11606b1d7685d4188ebca5fad32b15b";
