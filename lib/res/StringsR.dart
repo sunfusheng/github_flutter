@@ -1,4 +1,5 @@
 class StringsR {
+  static const String appTitle = 'GitHub-Flutter';
   static const String appAuthor = '作者：孙福生';
 
   static const String inputUsernameHint = '请输入用户名或邮箱';
