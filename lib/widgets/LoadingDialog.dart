@@ -44,26 +44,19 @@ class LoadingDialog extends Dialog {
   }
 }
 
-class LoadingDialogRouter extends PageRouteBuilder {
-  Widget dialog;
-
-  LoadingDialogRouter(this.dialog)
-      : super(
-            opaque: false,
-            transitionDuration: Duration.zero,
-            barrierColor: Colors.black45,
-            pageBuilder: (context, animation, secondaryAnimation) => dialog,
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) => child);
-}
-
 class LoadingDialogUtil {
   static show(BuildContext context, {String text}) {
     if (text == null || text.isEmpty) {
       text = StringsR.loading;
     }
 
-    Navigator.of(context).push(LoadingDialogRouter(LoadingDialog(text: text)));
+    Navigator.of(context).push(PageRouteBuilder(
+      opaque: false,
+      barrierColor: Colors.black45,
+      transitionDuration: Duration.zero,
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          LoadingDialog(text: text),
+    ));
   }
 
   static hide(BuildContext context) {

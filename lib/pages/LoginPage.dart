@@ -190,9 +190,12 @@ class _LoginPageState extends State<LoginPage> {
         LoadingDialogUtil.hide(context);
         if (it) {
           Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MainPage()),
-          );
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration.zero,
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    MainPage(),
+              ));
         }
       });
     });
