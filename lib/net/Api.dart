@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:github_flutter/entity/auth_entity.dart';
-import 'package:github_flutter/entity/user_entity.dart';
+import 'package:github_flutter/models/auth_entity.dart';
+import 'package:github_flutter/models/user_entity.dart';
 import 'package:github_flutter/net/NetUtil.dart';
 import 'package:github_flutter/net/ResponseData.dart';
 import 'package:github_flutter/res/constants.dart';

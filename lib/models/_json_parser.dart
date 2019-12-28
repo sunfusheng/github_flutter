@@ -1,6 +1,5 @@
-import 'package:github_flutter/entity/user_entity.dart';
-
 import 'auth_entity.dart';
+import 'user_entity.dart';
 
 class JsonParser {
   static T parse<T>(json) {

@@ -1,4 +1,4 @@
-import 'package:github_flutter/entity/json_parser.dart';
+import 'package:github_flutter/models/_json_parser.dart';
 
 class ResponseData<T> {
   int code;

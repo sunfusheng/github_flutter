@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:github_flutter/entity/auth_entity.dart';
-import 'package:github_flutter/entity/user_entity.dart';
+import 'package:github_flutter/models/auth_entity.dart';
+import 'package:github_flutter/models/user_entity.dart';
 import 'package:github_flutter/net/Api.dart';
 import 'package:github_flutter/net/ResponseData.dart';
 import 'package:github_flutter/pages/MainPage.dart';
