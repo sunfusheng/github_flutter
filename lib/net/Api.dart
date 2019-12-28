@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:github_flutter/entity/auth_entity.dart';
 import 'package:github_flutter/entity/user_entity.dart';
 import 'package:github_flutter/net/NetUtil.dart';
+import 'package:github_flutter/net/ResponseData.dart';
 import 'package:github_flutter/res/Constants.dart';
 import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
 
@@ -18,7 +19,7 @@ class LoginApi {
   }
 
   static fetchToken() async {
-    var response = await NetUtil.post('/authorizations',
+    ResponseData response = await NetUtil.post('/authorizations',
         params: {
           'note': Constants.NOTE,
           'note_url': Constants.NOTE_URL,
@@ -31,7 +32,8 @@ class LoginApi {
   }
 
   static fetchUser() async {
-    var response = await NetUtil.get('/user', headers: await _getHeaders());
+    ResponseData response =
+        await NetUtil.get('/user', headers: await _getHeaders());
     return response.parseJson<User>();
   }
 }

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: StringsR.appTitle,
       theme: ThemesR.mainTheme,
-      home: MainPage(),
+      home: LoginPage(),
     );
   }
 }

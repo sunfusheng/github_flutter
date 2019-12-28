@@ -3,6 +3,7 @@ import 'package:github_flutter/entity/auth_entity.dart';
 import 'package:github_flutter/entity/user_entity.dart';
 import 'package:github_flutter/net/Api.dart';
 import 'package:github_flutter/net/ResponseData.dart';
+import 'package:github_flutter/pages/MainPage.dart';
 import 'package:github_flutter/res/ColorsR.dart';
 import 'package:github_flutter/res/Constants.dart';
 import 'package:github_flutter/res/StringsR.dart';
@@ -187,7 +188,12 @@ class _LoginPageState extends State<LoginPage> {
         return false;
       }).listen((it) {
         LoadingDialogUtil.hide(context);
-        if (it) {}
+        if (it) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MainPage()),
+          );
+        }
       });
     });
   }
