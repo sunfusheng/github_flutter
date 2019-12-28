@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:github_flutter/pages/SplashPage.dart';
-import 'package:github_flutter/res/strings.dart';
 
+import 'pages/SplashPage.dart';
+import 'res/strings.dart';
 import 'res/styles.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class GitHubApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: StringsR.appTitle,
-      theme: ThemesR.mainTheme,
+      theme: StylesR.mainTheme,
       home: SplashPage(),
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-class ThemesR {
+class StylesR {
   static ThemeData mainTheme = ThemeData(
     primaryColor: ColorsR.colorPrimary,
     primaryColorDark: ColorsR.colorPrimary,
