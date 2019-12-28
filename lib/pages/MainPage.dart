@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github_flutter/res/StringsR.dart';
+import 'package:github_flutter/res/strings.dart';
 
 class MainPage extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:github_flutter/net/ExceptionUtil.dart';
-import 'package:github_flutter/res/Constants.dart';
+import 'package:github_flutter/res/constants.dart';
 
 import 'ResponseData.dart';
 

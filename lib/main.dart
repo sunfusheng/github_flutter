@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:github_flutter/pages/SplashPage.dart';
-import 'package:github_flutter/res/StringsR.dart';
+import 'package:github_flutter/res/strings.dart';
 
-import 'res/ThemesR.dart';
+import 'res/styles.dart';
 
 void main() {
   runApp(GitHubApp());

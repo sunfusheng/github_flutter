@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:github_flutter/res/ColorsR.dart';
-import 'package:github_flutter/res/StringsR.dart';
+import 'package:github_flutter/res/colors.dart';
+import 'package:github_flutter/res/strings.dart';
 
 class LoadingDialog extends Dialog {
   String text;

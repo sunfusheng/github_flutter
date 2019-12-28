@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github_flutter/res/Constants.dart';
+import 'package:github_flutter/res/constants.dart';
 import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
 import 'package:rxdart/rxdart.dart';
 

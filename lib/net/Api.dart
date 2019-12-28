@@ -4,7 +4,7 @@ import 'package:github_flutter/entity/auth_entity.dart';
 import 'package:github_flutter/entity/user_entity.dart';
 import 'package:github_flutter/net/NetUtil.dart';
 import 'package:github_flutter/net/ResponseData.dart';
-import 'package:github_flutter/res/Constants.dart';
+import 'package:github_flutter/res/constants.dart';
 import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
 
 class LoginApi {

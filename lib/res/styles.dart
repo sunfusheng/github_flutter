@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ColorsR.dart';
+import 'colors.dart';
 
 class ThemesR {
   static ThemeData mainTheme = ThemeData(
