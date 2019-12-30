@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:github_flutter/models/auth_entity.dart';
 import 'package:github_flutter/models/user_entity.dart';
 import 'package:github_flutter/net/Api.dart';
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                 icon: Icon(
                   Icons.clear,
                   color: ColorsR.font4,
-                  size: 17,
+                  size: 20,
                 ),
                 onPressed: () {
                   usernameController.clear();
@@ -84,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
           icon: Icon(
             showPassword ? Icons.visibility : Icons.visibility_off,
             color: ColorsR.font4,
-            size: 17,
+            size: 20,
           ),
           onPressed: () {
             setState(() {
@@ -203,42 +204,45 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          hideSoftKeyboard();
-        },
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: FractionalOffset.center,
-              child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    createUsernameWidget(),
-                    SizedBox(height: 10),
-                    createPasswordWidget(),
-                    SizedBox(height: 60),
-                    createLoginWidget(),
-                  ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            hideSoftKeyboard();
+          },
+          child: Stack(
+            children: <Widget>[
+              Align(
+                alignment: FractionalOffset.center,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      createUsernameWidget(),
+                      SizedBox(height: 10),
+                      createPasswordWidget(),
+                      SizedBox(height: 60),
+                      createLoginWidget(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 16),
-                child: Text(
-                  StringsR.appAuthor,
-                  style: TextStyle(color: ColorsR.font3, fontSize: 12),
+              Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    StringsR.appAuthor,
+                    style: TextStyle(color: ColorsR.font3, fontSize: 12),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
