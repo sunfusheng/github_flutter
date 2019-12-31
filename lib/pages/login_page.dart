@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:github_flutter/models/auth_entity.dart';
-import 'package:github_flutter/models/user_entity.dart';
-import 'package:github_flutter/net/Api.dart';
-import 'package:github_flutter/net/ResponseData.dart';
-import 'package:github_flutter/pages/MainPage.dart';
+import 'package:github_flutter/models/auth.dart';
+import 'package:github_flutter/models/user.dart';
+import 'package:github_flutter/http/api.dart';
+import 'package:github_flutter/http/response_data.dart';
+import 'package:github_flutter/pages/main_page.dart';
 import 'package:github_flutter/res/colors.dart';
 import 'package:github_flutter/res/constants.dart';
 import 'package:github_flutter/res/strings.dart';
-import 'package:github_flutter/utils/EncryptionUtil.dart';
-import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
-import 'package:github_flutter/utils/ToastUtil.dart';
-import 'package:github_flutter/widgets/LoadingDialog.dart';
+import 'package:github_flutter/utils/encryption_util.dart';
+import 'package:github_flutter/utils/shared_preferences_util.dart';
+import 'package:github_flutter/utils/toast_util.dart';
+import 'package:github_flutter/widgets/loading_dialog.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginPage extends StatefulWidget {

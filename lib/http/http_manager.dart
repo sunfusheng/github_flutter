@@ -1,11 +1,11 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
-import 'package:github_flutter/net/ExceptionUtil.dart';
+import 'package:github_flutter/http/http_exception_handler.dart';
 import 'package:github_flutter/res/constants.dart';
 
-import 'ResponseData.dart';
+import 'response_data.dart';
 
-class NetUtil {
+class HttpManager {
   static Dio _dio;
 
   static _getDio() {
@@ -38,7 +38,8 @@ class NetUtil {
   static _request(path, params, headers, Options options) async {
     bool connected = await isConnected();
     if (!connected) {
-      return ExceptionUtil.responseData(ExceptionUtil.NETWORK_ERROR);
+      return HttpExceptionHandler.responseData(
+          HttpExceptionHandler.NETWORK_ERROR);
     }
 
     if (headers != null) {
@@ -55,13 +56,13 @@ class NetUtil {
         response = await dio.request(path, data: params, options: options);
       }
     } on DioError catch (e) {
-      return ExceptionUtil.handleDioError(e);
+      return HttpExceptionHandler.handleDioError(e);
     }
 
     if (response?.statusCode == 200 || response?.statusCode == 201) {
       return ResponseData(code: 0, msg: 'OK', json: response.data);
     } else {
-      return ExceptionUtil.responseData(response?.statusCode);
+      return HttpExceptionHandler.responseData(response?.statusCode);
     }
   }
 

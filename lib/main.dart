@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/SplashPage.dart';
+import 'pages/splash_page.dart';
 import 'res/strings.dart';
 import 'res/styles.dart';
 

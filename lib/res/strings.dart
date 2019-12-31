@@ -10,4 +10,8 @@ class StringsR {
   static const String loading = '加载中';
   static const String loadingFailed = '加载失败！';
   static const String loadingSuccess = '加载成功';
+
+  static const String tabHome = '主页';
+  static const String tabDiscover = '发现';
+  static const String tabMine = '我的';
 }

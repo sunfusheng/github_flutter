@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:github_flutter/net/ResponseData.dart';
+import 'package:github_flutter/http/response_data.dart';
 
-class ExceptionUtil {
+class HttpExceptionHandler {
   // HTTP错误码
   static const int NO_CONTENT = 204;
   static const int UNAUTHORIZED = 401;
@@ -77,11 +77,11 @@ class ExceptionUtil {
 
   static ResponseData handleDioError(DioError e) {
     if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-      return responseData(ExceptionUtil.CONNECT_TIMEOUT);
+      return responseData(CONNECT_TIMEOUT);
     } else if (e.type == DioErrorType.SEND_TIMEOUT) {
-      return responseData(ExceptionUtil.SEND_TIMEOUT);
+      return responseData(SEND_TIMEOUT);
     } else if (e.type == DioErrorType.RECEIVE_TIMEOUT) {
-      return responseData(ExceptionUtil.RECEIVE_TIMEOUT);
+      return responseData(RECEIVE_TIMEOUT);
     }
     return responseData(e.response?.statusCode);
   }

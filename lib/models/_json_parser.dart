@@ -1,5 +1,5 @@
-import 'auth_entity.dart';
-import 'user_entity.dart';
+import 'auth.dart';
+import 'user.dart';
 
 class JsonParser {
   static T parse<T>(json) {

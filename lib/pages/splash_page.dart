@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:github_flutter/res/constants.dart';
-import 'package:github_flutter/utils/SharedPreferencesUtil.dart';
+import 'package:github_flutter/utils/shared_preferences_util.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'LoginPage.dart';
-import 'MainPage.dart';
+import 'login_page.dart';
+import 'main_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -40,6 +41,9 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white);
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(backgroundColor: Colors.white),
+    );
   }
 }
