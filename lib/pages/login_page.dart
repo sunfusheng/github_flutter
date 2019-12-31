@@ -173,8 +173,8 @@ class _LoginPageState extends State<LoginPage> {
 
     var auth = EncryptionUtil.encodeBase64('$username:$password');
     SharedPreferencesUtil.setString(PrefsKey.AUTH, auth).then((it) {
-      ZipStream.zip2(Stream.fromFuture(LoginApi.fetchToken()),
-          Stream.fromFuture(LoginApi.fetchUser()), (auth, user) {
+      ZipStream.zip2(Stream.fromFuture(LoginApi.fetchTokenByAuth()),
+          Stream.fromFuture(LoginApi.fetchUserByAuth()), (auth, user) {
         ResponseData<Auth> authResponse = auth;
         ResponseData<User> userResponse = user;
 

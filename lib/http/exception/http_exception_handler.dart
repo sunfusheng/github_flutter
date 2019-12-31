@@ -1,5 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:github_flutter/http/response_data.dart';
+
+import 'exception_info.dart';
 
 class HttpExceptionHandler {
   // HTTP错误码
@@ -68,28 +69,17 @@ class HttpExceptionHandler {
     }
   }
 
-  static ResponseData responseData(int errorCode) {
+  static ResponseData networkError() {
+    return ResponseData(
+      code: NETWORK_ERROR,
+      msg: exceptionInfo(NETWORK_ERROR).errorMsg,
+    );
+  }
+
+  static ResponseData handleHttpException(int errorCode) {
     return ResponseData(
       code: errorCode,
       msg: exceptionInfo(errorCode).errorMsg,
     );
   }
-
-  static ResponseData handleDioError(DioError e) {
-    if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-      return responseData(CONNECT_TIMEOUT);
-    } else if (e.type == DioErrorType.SEND_TIMEOUT) {
-      return responseData(SEND_TIMEOUT);
-    } else if (e.type == DioErrorType.RECEIVE_TIMEOUT) {
-      return responseData(RECEIVE_TIMEOUT);
-    }
-    return responseData(e.response?.statusCode);
-  }
-}
-
-class ExceptionInfo {
-  int errorCode;
-  String errorMsg;
-
-  ExceptionInfo(this.errorCode, this.errorMsg);
 }

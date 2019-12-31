@@ -27,6 +27,8 @@ dependencies:
   provider: ^4.0.1
   # https://github.com/brianegan/flutter_redux
   flutter_redux: ^0.6.0
+  # https://github.com/xuelongqy/flutter_easyrefresh
+  flutter_easyrefresh: ^2.0.8
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,4 @@
 class Constants {
-  static const String BASE_URL = 'https://api.github.com';
   static const String GITHUB_URL = 'https://github.com';
 
   static const String USER_AGENT = 'sunfusheng';

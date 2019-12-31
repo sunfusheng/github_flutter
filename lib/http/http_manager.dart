@@ -1,52 +1,35 @@
-import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
-import 'package:github_flutter/http/http_exception_handler.dart';
-import 'package:github_flutter/res/constants.dart';
+import 'package:github_flutter/http/exception/http_exception_handler.dart';
+import 'package:github_flutter/utils/network_util.dart';
 
+import 'exception/dio_exception_handler.dart';
 import 'response_data.dart';
+import 'factory/common_dio.dart';
 
 class HttpManager {
-  static Dio _dio;
-
-  static _getDio() {
-    if (_dio == null) {
-      _dio = Dio(BaseOptions(
-        baseUrl: Constants.BASE_URL,
-        connectTimeout: 30000,
-        sendTimeout: 30000,
-        receiveTimeout: 30000,
-      ));
-      _dio.interceptors.add(LogInterceptor(
-        request: false,
-        requestHeader: true,
-        responseHeader: false,
-        responseBody: true,
-      ));
-    }
-    return _dio;
-  }
-
   // GET请求
-  static get(path, {params, headers}) async =>
-      await _request(path, params, headers, Options(method: "GET"));
+  static get({dio, path, params, headers}) async =>
+      await _request(dio, path, params, headers, Options(method: "GET"));
 
   // POST请求
-  static post(path, {params, headers}) async =>
-      await _request(path, params, headers, Options(method: 'POST'));
+  static post({dio, path, params, headers}) async =>
+      await _request(dio, path, params, headers, Options(method: 'POST'));
 
   // 网络请求
-  static _request(path, params, headers, Options options) async {
-    bool connected = await isConnected();
+  static _request(dio, path, params, headers, Options options) async {
+    bool connected = await NetworkUtil.isConnected();
     if (!connected) {
-      return HttpExceptionHandler.responseData(
-          HttpExceptionHandler.NETWORK_ERROR);
+      return HttpExceptionHandler.networkError();
+    }
+
+    if (dio == null) {
+      dio = CommonDio.dio();
     }
 
     if (headers != null) {
       options.headers = headers;
     }
 
-    Dio dio = _getDio();
     Response response;
     try {
       if (options.method == 'GET') {
@@ -56,19 +39,13 @@ class HttpManager {
         response = await dio.request(path, data: params, options: options);
       }
     } on DioError catch (e) {
-      return HttpExceptionHandler.handleDioError(e);
+      return DioExceptionHandler.handleDioException(e);
     }
 
     if (response?.statusCode == 200 || response?.statusCode == 201) {
       return ResponseData(code: 0, msg: 'OK', json: response.data);
     } else {
-      return HttpExceptionHandler.responseData(response?.statusCode);
+      return HttpExceptionHandler.handleHttpException(response?.statusCode);
     }
-  }
-
-  // 判断网络是否连接
-  static Future<bool> isConnected() async {
-    var result = await (Connectivity().checkConnectivity());
-    return result != ConnectivityResult.none;
   }
 }

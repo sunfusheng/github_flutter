@@ -1,41 +1,36 @@
-import 'dart:collection';
-
 import 'package:github_flutter/models/auth.dart';
 import 'package:github_flutter/models/user.dart';
 import 'package:github_flutter/http/http_manager.dart';
 import 'package:github_flutter/http/response_data.dart';
 import 'package:github_flutter/res/constants.dart';
-import 'package:github_flutter/utils/shared_preferences_util.dart';
+
+import 'factory/login_dio.dart';
 
 class LoginApi {
-  static _getHeaders() async {
-    Map<String, String> headers = HashMap<String, String>();
-    headers['Accept'] = Constants.ACCEPT_JSON;
-    var auth = await SharedPreferencesUtil.getString(PrefsKey.AUTH);
-    if (auth != null) {
-      headers['Authorization'] = 'Basic $auth';
-    }
-    return headers;
-  }
-
-  static fetchToken() async {
-    ResponseData response = await HttpManager.post('/authorizations',
-        params: {
-          'note': Constants.NOTE,
-          'note_url': Constants.NOTE_URL,
-          'client_id': Constants.CLIENT_ID,
-          'client_secret': Constants.CLIENT_SECRET,
-          'scopes': Constants.SCOPES,
-        },
-        headers: await _getHeaders());
+  static fetchTokenByAuth() async {
+    ResponseData response = await HttpManager.post(
+      dio: LoginDio.dio(),
+      path: '/authorizations',
+      params: {
+        'note': Constants.NOTE,
+        'note_url': Constants.NOTE_URL,
+        'client_id': Constants.CLIENT_ID,
+        'client_secret': Constants.CLIENT_SECRET,
+        'scopes': Constants.SCOPES,
+      },
+    );
     return response.parseJson<Auth>();
   }
 
-  static fetchUser() async {
-    ResponseData response =
-        await HttpManager.get('/user', headers: await _getHeaders());
+  static fetchUserByAuth() async {
+    ResponseData response = await HttpManager.get(
+      dio: LoginDio.dio(),
+      path: '/user',
+    );
     return response.parseJson<User>();
   }
 }
 
-class Api {}
+class Api {
+
+}
