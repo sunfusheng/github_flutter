@@ -1,5 +1,5 @@
-import 'package:github_flutter/models/auth.dart';
-import 'package:github_flutter/models/user.dart';
+import 'package:github_flutter/models/auth_model.dart';
+import 'package:github_flutter/models/user_model.dart';
 import 'package:github_flutter/http/http_manager.dart';
 import 'package:github_flutter/http/response_data.dart';
 import 'package:github_flutter/res/constants.dart';
@@ -19,7 +19,7 @@ class LoginApi {
         'scopes': Constants.SCOPES,
       },
     );
-    return response.parseJson<Auth>();
+    return response.parseJson<AuthModel>();
   }
 
   static fetchUserByAuth() async {
@@ -27,10 +27,8 @@ class LoginApi {
       dio: LoginDio.dio(),
       path: '/user',
     );
-    return response.parseJson<User>();
+    return response.parseJson<UserModel>();
   }
 }
 
-class Api {
-
-}
+class Api {}

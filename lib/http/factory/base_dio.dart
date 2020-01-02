@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-class DioBase {
+class BaseDio {
   static const String BASE_URL = 'https://api.github.com';
   static const int CONNECT_TIMEOUT = 30000;
   static const int SEND_TIMEOUT = 30000;

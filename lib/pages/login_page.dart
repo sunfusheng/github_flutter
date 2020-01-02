@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:github_flutter/models/auth.dart';
-import 'package:github_flutter/models/user.dart';
+import 'package:github_flutter/models/auth_model.dart';
+import 'package:github_flutter/models/user_model.dart';
 import 'package:github_flutter/http/api.dart';
 import 'package:github_flutter/http/response_data.dart';
 import 'package:github_flutter/pages/main_page.dart';
@@ -175,8 +175,8 @@ class _LoginPageState extends State<LoginPage> {
     SharedPreferencesUtil.setString(PrefsKey.AUTH, auth).then((it) {
       ZipStream.zip2(Stream.fromFuture(LoginApi.fetchTokenByAuth()),
           Stream.fromFuture(LoginApi.fetchUserByAuth()), (auth, user) {
-        ResponseData<Auth> authResponse = auth;
-        ResponseData<User> userResponse = user;
+        ResponseData<AuthModel> authResponse = auth;
+        ResponseData<UserModel> userResponse = user;
 
         if (authResponse.code == 0 && userResponse.code == 0) {
           SharedPreferencesUtil.setString(

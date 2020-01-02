@@ -1,4 +1,4 @@
-import 'package:github_flutter/models/_json_parser.dart';
+import 'package:github_flutter/generated/json/base/json_convert_content.dart';
 
 class ResponseData<T> {
   int code;
@@ -11,7 +11,7 @@ class ResponseData<T> {
   ResponseData<T> parseJson<T>() {
     ResponseData<T> obj = ResponseData<T>(code: code, msg: msg, json: json);
     if (json != null && json.isNotEmpty) {
-      obj.data = JsonParser.parse<T>(json);
+      obj.data = JsonConvert.fromJsonAsT<T>(json);
     }
     return obj;
   }
