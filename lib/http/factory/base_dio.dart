@@ -24,7 +24,7 @@ class BaseDio {
       request: false,
       requestHeader: true,
       responseHeader: false,
-      responseBody: true,
+      responseBody: false,
     ));
     return interceptors;
   }

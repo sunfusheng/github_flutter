@@ -13,6 +13,13 @@ class EventModel with JsonConvert<EventModel> {
 	@JSONField("created_at")
 	String createdAt;
 	EventOrg org;
+
+	@override
+	String toString() {
+		return 'EventModel{type: $type, actor: $actor, repo: $repo}';
+	}
+
+
 }
 
 class EventPayload with JsonConvert<EventPayload> {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:github_flutter/http/api.dart';
+import 'package:github_flutter/http/response_data.dart';
+import 'package:github_flutter/models/event_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -29,6 +32,9 @@ class _HomePageState extends State<HomePage>
       header: ClassicalHeader(),
       footer: ClassicalFooter(),
       onRefresh: () async {
+        ResponseData<EventModel> eventsResponse =
+            await Api.fetchReceivedEvents('sunfusheng', 1, 20);
+
         await Future.delayed(Duration(seconds: 2), () {
           print('onRefresh');
           setState(() {

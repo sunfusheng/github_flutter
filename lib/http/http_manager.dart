@@ -32,12 +32,7 @@ class HttpManager {
 
     Response response;
     try {
-      if (options.method == 'GET') {
-        response =
-            await dio.get(path, queryParameters: params, options: options);
-      } else {
-        response = await dio.request(path, data: params, options: options);
-      }
+      response = await dio.request(path, data: params, options: options);
     } on DioError catch (e) {
       return DioExceptionHandler.handleDioException(e);
     }

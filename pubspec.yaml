@@ -3,7 +3,7 @@ description: A Flutter Version of GitHub Client.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -18,7 +18,7 @@ dependencies:
   # https://github.com/ReactiveX/rxdart
   rxdart: ^0.23.1
   # https://github.com/flutterchina/dio
-  dio: ^3.0.7
+  dio: ^3.0.8
   # https://github.com/flutter/plugins/tree/master/packages/connectivity
   connectivity: ^0.4.6+1
   # https://pub.flutter-io.cn/packages/shared_preferences#-readme-tab-
