@@ -23,7 +23,7 @@ class HttpManager {
     }
 
     if (dio == null) {
-      dio = CommonDio.dio();
+      dio = CommonDio.dio;
     }
 
     if (headers != null) {

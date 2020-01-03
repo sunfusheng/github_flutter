@@ -5,7 +5,7 @@ import 'package:github_flutter/http/interceptors/common_headers_interceptor.dart
 class CommonDio extends BaseDio {
   static Dio _dio;
 
-  static Dio dio() {
+  static Dio get dio {
     if (_dio == null) {
       _dio = CommonDio().createDio();
     }

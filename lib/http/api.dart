@@ -10,7 +10,7 @@ import 'factory/login_dio.dart';
 class LoginApi {
   static fetchTokenByAuth() async {
     ResponseData response = await HttpManager.post(
-      dio: LoginDio.dio(),
+      dio: LoginDio.dio,
       path: '/authorizations',
       params: {
         'note': Constants.NOTE,
@@ -25,7 +25,7 @@ class LoginApi {
 
   static fetchUserByAuth() async {
     ResponseData response = await HttpManager.get(
-      dio: LoginDio.dio(),
+      dio: LoginDio.dio,
       path: '/user',
     );
     return response.parseJson<UserModel>();
