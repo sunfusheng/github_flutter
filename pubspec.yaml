@@ -18,7 +18,7 @@ dependencies:
   # https://github.com/ReactiveX/rxdart
   rxdart: ^0.23.1
   # https://github.com/flutterchina/dio
-  dio: ^3.0.8
+  dio: ">=3.0.8 <6.0.0"
   # https://github.com/flutter/plugins/tree/master/packages/connectivity
   connectivity: ^0.4.6+1
   # https://pub.flutter-io.cn/packages/shared_preferences#-readme-tab-
